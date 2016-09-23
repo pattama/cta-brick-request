@@ -17,13 +17,22 @@ const cementHelper = {
   },
 };
 const Context = require('events').EventEmitter;
+const test = {
+  lib: null,
+  response: {
+    status: 200,
+    type: 'application/json',
+    data: {result: 'ok'},
+    headers: {},
+  },
+  exec: null,
+};
 
 describe('tests', () => {
-  let lib;
   context('instantiation', () => {
     it('throw if missing request dependency', (done) => {
       try {
-        lib = new Lib(cementHelper, {
+        test.lib = new Lib(cementHelper, {
           name: 'cta-brick-request',
           properties: {},
         });
@@ -36,11 +45,14 @@ describe('tests', () => {
     it('accept if provided request dependency', (done) => {
       try {
         cementHelper.dependencies.request = request;
-        lib = new Lib(cementHelper, {
+        test.lib = new Lib(cementHelper, {
           name: 'cta-brick-request',
           properties: {},
         });
-        assert.property(lib, 'request');
+        test.exec = sinon.stub(test.lib.request, 'exec', (p) => {
+          return Promise.resolve(test.response);
+        });
+        assert.property(test.lib, 'request');
         done();
       } catch (err) {
         console.error(err);
@@ -48,17 +60,12 @@ describe('tests', () => {
       }
     });
   });
-  context('main contracts', () => {
-    it('exec', (done) => {
-      const params = {
+
+  context('process', () => {
+    it('process with exec', (done) => {
+      const payload = {
         method: 'GET',
         url: 'http://localhost',
-      };
-      const response = {
-        status: 200,
-        type: 'application/json',
-        data: {result: 'ok'},
-        headers: {},
       };
       const context = new Context();
       context.data = {
@@ -66,18 +73,59 @@ describe('tests', () => {
           type: 'request',
           quality: 'exec',
         },
-        payload: params,
+        payload: payload,
       };
-      const _exec = sinon.stub(lib.request, 'exec', (p) => {
-        console.log('exec params: ', p);
-        return Promise.resolve(response);
-      });
-      lib.process(context);
-      _exec.restore();
-      sinon.assert.calledWith(_exec, params);
+      test.lib.process(context);
+      sinon.assert.calledWith(test.exec, payload);
       context.on('done', function(name, result) {
         assert.strictEqual(name, 'cta-brick-request');
-        assert.deepEqual(result, response);
+        assert.deepEqual(result, test.response);
+        done();
+      });
+    });
+    it('process with get', (done) => {
+      const payload = {
+        method: 'GET',
+        url: 'http://localhost',
+      };
+      const context = new Context();
+      context.data = {
+        nature: {
+          type: 'request',
+          quality: 'get',
+        },
+        payload: payload,
+      };
+      test.lib.process(context);
+      sinon.assert.calledWith(test.exec, payload);
+      context.on('done', function(name, result) {
+        assert.strictEqual(name, 'cta-brick-request');
+        assert.deepEqual(result, test.response);
+        done();
+      });
+    });
+    it('process with error', (done) => {
+      const payload = {
+        method: 'GET',
+        url: 'http://localhost',
+      };
+      const context = new Context();
+      context.data = {
+        nature: {
+          type: 'request',
+          quality: 'get',
+        },
+        payload: payload,
+      };
+      test.exec.restore();
+      test.exec = sinon.stub(test.lib.request, 'exec', function() {
+        throw new Error('exec error');
+      });
+      test.lib.process(context);
+      sinon.assert.calledWith(test.exec, payload);
+      context.on('error', function(name, err) {
+        assert.strictEqual(name, 'cta-brick-request');
+        assert.strictEqual(err.message, 'exec error');
         done();
       });
     });
