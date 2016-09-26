@@ -20,10 +20,10 @@ Currently none
 | nature.type | nature.quality | payload sample
 | --- | --- | ---
 | request | exec | ````{ method: 'HEAD', url: 'http://some.domain.com' }````
-| request | get | { url: 'http://some.domain.com' }
-| request | post | { url: 'http://some.domain.com', body: {id: 1, name: 'foo'}, headers: {'x-from': 'some service'} }
-| request | put | { url: 'http://some.domain.com/1', body: { name: 'bar'} }
-| request | delete | { url: 'http://some.domain.com/1', headers: {'token': 'dsqqp1lkjuldskfj2scfkswnhd9wfwjswjhn9g'} }
+| request | get | ````{ url: 'http://some.domain.com' }````
+| request | post | ````{ url: 'http://some.domain.com', body: {id: 1, name: 'foo'}, headers: {'x-from': 'some service'} }````
+| request | put | ````{ url: 'http://some.domain.com/1', body: { name: 'bar'} }````
+| request | delete | ````{ url: 'http://some.domain.com/1', headers: {'token': 'dsqqp1lkjuldskfj2scfkswnhd9wfwjswjhn9g'} }````
 
 # Configuration sample
 
