@@ -19,7 +19,7 @@ Currently none
 
 | nature.type | nature.quality | payload sample
 | --- | --- | ---
-| request | exec | { method: 'HEAD', url: 'http://some.domain.com' }
+| request | exec | ````{ method: 'HEAD', url: 'http://some.domain.com' }````
 | request | get | { url: 'http://some.domain.com' }
 | request | post | { url: 'http://some.domain.com', body: {id: 1, name: 'foo'}, headers: {'x-from': 'some service'} }
 | request | put | { url: 'http://some.domain.com/1', body: { name: 'bar'} }
