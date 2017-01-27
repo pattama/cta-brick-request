@@ -2,7 +2,7 @@
 
 const assert = require('chai').assert;
 const sinon = require('sinon');
-const Lib = require('../lib');
+const Lib = require('../../lib');
 const request = new (require('cta-tool-request'))();
 const cementHelper = {
   constructor: {
