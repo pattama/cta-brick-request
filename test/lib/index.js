@@ -49,7 +49,7 @@ describe('tests', () => {
           name: 'cta-brick-request',
           properties: {},
         });
-        test.exec = sinon.stub(test.lib.request, 'exec', (p) => {
+        test.exec = sinon.stub(test.lib.request, 'exec', () => {
           return Promise.resolve(test.response);
         });
         assert.property(test.lib, 'request');
