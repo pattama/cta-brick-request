@@ -2,7 +2,7 @@
 
 const assert = require('chai').assert;
 const sinon = require('sinon');
-const Lib = require('../lib');
+const Lib = require('../../lib');
 const request = new (require('cta-tool-request'))();
 const cementHelper = {
   constructor: {
@@ -38,7 +38,7 @@ describe('tests', () => {
         });
         done('should not be here');
       } catch (err) {
-        console.log(err);
+        // console.log(err);
         done();
       }
     });
@@ -49,13 +49,13 @@ describe('tests', () => {
           name: 'cta-brick-request',
           properties: {},
         });
-        test.exec = sinon.stub(test.lib.request, 'exec', (p) => {
+        test.exec = sinon.stub(test.lib.request, 'exec', () => {
           return Promise.resolve(test.response);
         });
         assert.property(test.lib, 'request');
         done();
       } catch (err) {
-        console.error(err);
+        // console.error(err);
         done('should not be here');
       }
     });
