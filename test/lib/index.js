@@ -38,7 +38,7 @@ describe('tests', () => {
         });
         done('should not be here');
       } catch (err) {
-        console.log(err);
+        // console.log(err);
         done();
       }
     });
@@ -55,7 +55,7 @@ describe('tests', () => {
         assert.property(test.lib, 'request');
         done();
       } catch (err) {
-        console.error(err);
+        // console.error(err);
         done('should not be here');
       }
     });
