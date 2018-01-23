@@ -1,5 +1,8 @@
 CTA-BRICK-REQUEST
 =================
+[![Build Status](https://travis-ci.org/thomsonreuters/cta-brick-request.svg?branch=master)](https://travis-ci.org/thomsonreuters/cta-brick-request)
+[![Coverage Status](https://coveralls.io/repos/github/thomsonreuters/cta-brick-request/badge.svg?branch=master)](https://coveralls.io/github/thomsonreuters/cta-brick-request?branch=master)
+[![codecov](https://codecov.io/gh/thomsonreuters/cta-brick-request/branch/master/graph/badge.svg)](https://codecov.io/gh/thomsonreuters/cta-brick-request)
 
 This is the Brick adapter of cta-tool-request, it allows making http requests over this tool in a flowcontrol application 
 
